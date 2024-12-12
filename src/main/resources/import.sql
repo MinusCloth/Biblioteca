@@ -1,0 +1,1 @@
+INSERT INTO USUARIOS (email,nome,senha)VALUES('@gmail','dudu','123');
