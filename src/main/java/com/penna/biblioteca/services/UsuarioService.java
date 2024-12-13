@@ -27,5 +27,21 @@ public class UsuarioService {
         return new UsuarioDto(usuario);
     }
 
-    
+    public UsuarioDto insert(UsuarioDto usuario) {//Receber Dto
+        Usuarios usuarios = new Usuarios(usuario);//Converter Dto para entity
+        Usuarios savedUser=usuariosRepository.save(usuarios);//salvar entity no db
+        return new UsuarioDto(savedUser);//converter novamente para dto
+    }
+
+    public UsuarioDto update(UsuarioDto usuarioDto){//Receber Dto
+        Usuarios usuario = new Usuarios(usuarioDto);//Converter Dto para entity
+        Usuarios savedUser = usuariosRepository.save(usuario);//salvar entity no db
+        return new UsuarioDto(savedUser);//converter novamente para dto
+
+    }
+
+
+
+
+
 }

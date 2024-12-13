@@ -1,6 +1,8 @@
 package com.penna.biblioteca.entities;
 
+import com.penna.biblioteca.dtos.UsuarioDto;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
@@ -21,6 +23,11 @@ public class Usuarios {
         this.email = email;
         this.senha = senha;
     }
+
+    public Usuarios(UsuarioDto usuario) {
+        BeanUtils.copyProperties(usuario,this);
+    }
+
     public Usuarios() {}
 
     public Long getId() {
