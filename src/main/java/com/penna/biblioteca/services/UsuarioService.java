@@ -2,7 +2,9 @@ package com.penna.biblioteca.services;
 
 import com.penna.biblioteca.dtos.UsuarioDto;
 import com.penna.biblioteca.entities.UsuarioEntity;
+import com.penna.biblioteca.exceptions.ResourceNotFoundException;
 import com.penna.biblioteca.repositories.UsuariosRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,7 @@ public class UsuarioService {
 
     }
 
-    public UsuarioDto findById(@PathVariable Long userId){
+    public UsuarioDto findById(Long userId){
         UsuarioEntity usuario = usuariosRepository.findById(userId).get();
         return new UsuarioDto(usuario);
     }
@@ -34,14 +36,21 @@ public class UsuarioService {
         return new UsuarioDto(savedUser);//converter novamente para dto
     }
 
-    public UsuarioDto update(UsuarioDto usuarioDto){//Receber Dto
-        UsuarioEntity usuario = new UsuarioEntity(usuarioDto);//Converter Dto para entity
-        UsuarioEntity savedUser = usuariosRepository.save(usuario);//salvar entity no db
-        return new UsuarioDto(savedUser);//converter novamente para dto
 
+    public void update(Long id,UsuarioDto usuarioDto){//Receber Dto, e id
+
+        // Busca a entidade pelo ID ou lança exceção se não encontrar
+        UsuarioEntity usuarioEntity = usuariosRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
+
+        // Copia as propriedades do DTO para a entidade existente, exceto o ID
+        BeanUtils.copyProperties(usuarioDto, usuarioEntity, "id");
+
+        // Salva a entidade atualizada
+        usuariosRepository.save(usuarioEntity);
     }
 
-    public void delete(@PathVariable Long id){
+    public void delete(Long id){
         usuariosRepository.deleteById(id);
     }
 

@@ -28,6 +28,17 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
+    @PutMapping("livro/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody LivroDto livro){
+        service.update(id, livro);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("livro/{id}")
+    public void delete(@PathVariable Long id){
+        service.delete(id);
+    }
+
 
 
 
