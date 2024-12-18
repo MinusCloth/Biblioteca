@@ -1,7 +1,7 @@
 package com.penna.biblioteca.services;
 
 import com.penna.biblioteca.dtos.UsuarioDto;
-import com.penna.biblioteca.entities.Usuarios;
+import com.penna.biblioteca.entities.UsuarioEntity;
 import com.penna.biblioteca.repositories.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,27 +17,32 @@ public class UsuarioService {
 
 
     public List<UsuarioDto>findAll(){
-        List<Usuarios> result=usuariosRepository.findAll();
-        return result.stream().map(UsuarioDto::new).toList();
+        List<UsuarioEntity> result=usuariosRepository.findAll();
+        //     obj             map obj que deseja::new para uma lista
+        return result.stream().map(UsuarioDto::new).toList();//converte a entity em dto
 
     }
 
     public UsuarioDto findById(@PathVariable Long userId){
-        Usuarios usuario = usuariosRepository.findById(userId).get();
+        UsuarioEntity usuario = usuariosRepository.findById(userId).get();
         return new UsuarioDto(usuario);
     }
 
     public UsuarioDto insert(UsuarioDto usuario) {//Receber Dto
-        Usuarios usuarios = new Usuarios(usuario);//Converter Dto para entity
-        Usuarios savedUser=usuariosRepository.save(usuarios);//salvar entity no db
+        UsuarioEntity usuarioEntity = new UsuarioEntity(usuario);//Converter Dto para entity
+        UsuarioEntity savedUser=usuariosRepository.save(usuarioEntity);//salvar entity no db
         return new UsuarioDto(savedUser);//converter novamente para dto
     }
 
     public UsuarioDto update(UsuarioDto usuarioDto){//Receber Dto
-        Usuarios usuario = new Usuarios(usuarioDto);//Converter Dto para entity
-        Usuarios savedUser = usuariosRepository.save(usuario);//salvar entity no db
+        UsuarioEntity usuario = new UsuarioEntity(usuarioDto);//Converter Dto para entity
+        UsuarioEntity savedUser = usuariosRepository.save(usuario);//salvar entity no db
         return new UsuarioDto(savedUser);//converter novamente para dto
 
+    }
+
+    public void delete(@PathVariable Long id){
+        usuariosRepository.deleteById(id);
     }
 
 

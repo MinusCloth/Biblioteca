@@ -1,6 +1,6 @@
 package com.penna.biblioteca.dtos;
 
-import com.penna.biblioteca.entities.Usuarios;
+import com.penna.biblioteca.entities.UsuarioEntity;
 import org.springframework.beans.BeanUtils;
 
 public class UsuarioDto {
@@ -10,7 +10,7 @@ public class UsuarioDto {
     private String email;
     private String senha;
 
-    public UsuarioDto(Usuarios usuario){
+    public UsuarioDto(UsuarioEntity usuario){
         BeanUtils.copyProperties(usuario,this);
     }
 

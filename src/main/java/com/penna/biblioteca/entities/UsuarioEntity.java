@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="Usuarios")
-public class Usuarios {
+public class UsuarioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,18 +17,18 @@ public class Usuarios {
     private String email;
     private String senha;
 
-    public Usuarios(Long id, String nome, String email, String senha) {
+    public UsuarioEntity(Long id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
     }
 
-    public Usuarios(UsuarioDto usuario) {
+    public UsuarioEntity(UsuarioDto usuario) {
         BeanUtils.copyProperties(usuario,this);
     }
 
-    public Usuarios() {}
+    public UsuarioEntity() {}
 
     public Long getId() {
         return id;
@@ -66,8 +66,8 @@ public class Usuarios {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Usuarios usuarios = (Usuarios) o;
-        return Objects.equals(id, usuarios.id);
+        UsuarioEntity usuarioEntity = (UsuarioEntity) o;
+        return Objects.equals(id, usuarioEntity.id);
     }
 
     @Override
